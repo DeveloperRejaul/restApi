@@ -1,0 +1,10 @@
+{
+  "name": "apple123",
+  "descriptions": "hello world",
+  "mainCategory": "a",
+  "subCategory": "b",
+  "tags": ["a", "b", "c"],
+  "mainPrice": "100",
+  "discountedPrice": "50",
+  "numberOfStock":"20"
+}

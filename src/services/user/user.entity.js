@@ -115,7 +115,6 @@ export const logout = ({ settings }) => async (req, res) => {
   }
 };
 
-
 /**
  * This function is used get all users in the database by query.
  * @param {Object} req This is the request object.

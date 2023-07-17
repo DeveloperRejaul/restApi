@@ -29,6 +29,9 @@ import { imageUp } from './controllers/imageUp';
 import gracefullShutdown from './controllers/gracefullShutdown';
 import { driverCache } from './controllers/driverCache';
 
+require("dotenv").config()
+
+
 export default class App {
   constructor({ deps } = {}) {
     this.express = express();
@@ -76,6 +79,7 @@ export default class App {
         origin: this.config.origin,
         credentials: true
       }));
+
     this.express.use(morgan('common')); // Logger
     this.express.use(actuator({ infoGitMode: 'full' })); // Health Checker
     this.express.use(json()); // Parse JSON response
@@ -84,6 +88,7 @@ export default class App {
     this.express.use(parse()); // Parse Form data as JSON
     this.express.use('/api', limiter, this.router); // All the API routes
     this.express.use(express.static(path.resolve(__dirname, '..', 'client'))); // REACT build files (Statics)
+    this.express.use(express.static("../uploads")); // images files (Statics)
 
     if (this.config.useHTTP2) {
       // SSL configuration

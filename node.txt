@@ -1,0 +1,105 @@
+
+
+stapes 01
+1. express server
+
+// collection
+
+1. create product : post
+    1. name
+    2. descriptions
+    3. category
+        1. product category
+        2. sub category
+        3. [tags]
+        4. [images]
+        5. price [discounted_price , main_price ]
+
+2. products : get
+    1. all products
+        1. image
+        2. product title
+        3. price
+    2. single product by id
+        1. all image
+        2. price
+        3. product from
+        4. product company website link
+        5. product delivery data
+        6. product description
+        7. money back : boolean data type
+        8. product category name
+
+3. order products
+    1. create order: post
+        1. product link
+        2. product name
+        3. quantity
+        4. note (optional)
+        5. id : '#2050'
+        6. creator/customer name
+    2.  Orders
+        1. requested orders : get
+            1. id
+            2. name
+            3. link
+            4. data
+            5. customer name
+            6. status [ abandoned || estimate send || closed || pending ]
+        2. all orders after requested
+            1. products : get
+                1. oder id
+                2. product name
+                3. date
+                4. customer name
+                5. status [ paid || complected || processing ]
+                6. items
+                7. total price
+             2. products : put // edit order
+             2. products : delete // delete order
+
+
+4. customer
+    1. get all customer
+        1. name
+        2. number
+        3. location
+        4. orders
+        5. spent amount
+
+5. Support // chatting
+6. staff
+    1. create staff : post
+        1. fast name
+        2. last name
+        3. email
+        4. number
+        5. role
+    2. get all staff
+        1. image
+        2. name
+        3. access type
+        4. role
+
+
+
+
+
+
+2. Blog : get
+    1. all blog
+        1. image
+        2. title
+        3. description
+    2. single blog
+        1. created user image
+        2. user name
+        3. created date
+        4. [title]
+        5. [description]
+        6. [images]
+
+    3. Related blog
+        1. related blog
+
+
