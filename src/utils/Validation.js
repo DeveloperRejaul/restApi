@@ -33,7 +33,20 @@ const Validation  = () => {
       if (Object.keys(obj).length == len) return true
       return false
 
+    },
+
+    /**
+     * @description this function for check Empty value
+     * @param {object} obj request body
+     * @param {number} len number of object length
+     * @returns  Boolean value
+     */
+    isEmpty: (...value) => {
+      for (let i = 0; i < value.length; i++) {
+        return value[i] === "" ? true :false
+      }
     }
+
 
   }
 }

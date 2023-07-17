@@ -1,4 +1,5 @@
 import Validation from '../../utils/Validation'
+import Support from '../support/support.schema';
 import Staff from './staff.schema';
 
 /**
@@ -8,14 +9,24 @@ import Staff from './staff.schema';
  * @returns if  is  success  It returns a object created single staff info  .
  */
 export const addStaff =({ db }) =>async (req, res) => {
-  const { email, phoneNumber} = req.body || {}
+  const { email, phoneNumber, role } = req.body || {}
+  const existSupportStaff = role === 'support';
+
+
   try {
     if(!Validation().objKeysLength(req.body, 6)) return res.status(400).send('invalid request');
     if(!Validation().isEmail(email)) return res.status(400).send('invalid email');
     if (!Validation().isPhoneNumber(phoneNumber)) return res.status(400).send('invalid phone number');
-      const staff =  await db.create({ table: Staff, key: { ...req.body } });
-      await db.save(staff);
-      res.status(200).send(staff)
+    const staff = await db.create({ table: Staff, key: { ...req.body } });
+    await db.save(staff);
+
+    // add support staff hear
+    if (existSupportStaff) {
+       const supportStaff = await db.create({ table: Support, key: {supportUser:staff._id} });
+       await db.save(supportStaff);
+    }
+
+    res.status(200).send(staff)
     } catch (err) {
       console.log(err);
       res.status(500).send('Don"t connect with me');

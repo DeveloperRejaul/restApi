@@ -1,4 +1,5 @@
 import Product from './products.schema';
+import Category from '../category/category.schema';
 
 /**
  * This function is used for create product.
@@ -8,8 +9,8 @@ import Product from './products.schema';
  */
 
 export const productPost = ({ db, imageUp }) => async (req, res) => {
-  try {
 
+  try {
     const validObj = Object.keys(req.body).every((d) => req.body[d] !== '' && req.body[d] !== null) || Object.keys(req.body.data).every((d) => req.body.data[d] !== '' && req.body.data[d] !== null);
     if (!validObj) res.status(400).send(' wrong request');
     if (req.body?.data) req.body = JSON.parse(req.body?.data || '{}');
@@ -19,12 +20,13 @@ export const productPost = ({ db, imageUp }) => async (req, res) => {
         req.body.pImages = [...(req.body.pImages || []), images];
       }
     }
-    const product =  await db.create({
+    const categoryId = req.body?.categoryId;
+    const product = await db.create({
           table: Product,
           key: { ...req.body},
-      });
-      await db.save(product);
-      await res.status(200).send(product)
+    });
+    await Category.updateOne({ _id: categoryId }, { $push: { productId: product._id } });
+    await res.status(200).send(product);
     } catch (err) {
       console.log(err);
       res.status(500).send('Don"t connect with me');
@@ -41,8 +43,9 @@ export const getAllProduct =({ db }) => async (req, res) => {
     try {
       const products = await db.find({
         table: Product,
-        key: { paginate: true },
+        key: { paginate: true, populate: { path: 'categoryId', select: 'name slug'} },
       });
+
       await res.status(200).send(products);
     } catch (err) {
       console.log(err);

@@ -1,14 +1,14 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
 const Coupon = new Schema(
   {
-    user:[{type: mongoose.Types.ObjectId, ref: "User"}],
-    couponName: { type: String },
-    couponType: { type: String, enum: ["fix", "percentage"]},
-    couponAmount: { type: String },
-    couponUseLimit: { type: String },
-    expireDate: { type: String }
+    couponName: { type: String , required:true, unique: true},
+    couponType: { type: String, required:true, enum: ["fix", "percentage"]},
+    couponAmount: { type: String ,required:true},
+    couponUseLimit: { type: String , required:true},
+    expireDate: { type: String, required: true },
+    couponUser:[{type: mongoose.Types.ObjectId, ref: "User"}]
   },
   { timestamps: true }
 );
