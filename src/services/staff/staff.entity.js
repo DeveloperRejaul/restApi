@@ -12,7 +12,6 @@ export const addStaff =({ db }) =>async (req, res) => {
   const { email, phoneNumber, role } = req.body || {}
   const existSupportStaff = role === 'support';
 
-
   try {
     if(!Validation().objKeysLength(req.body, 6)) return res.status(400).send('invalid request');
     if(!Validation().isEmail(email)) return res.status(400).send('invalid email');
@@ -48,7 +47,6 @@ export const logoutAllStaff =({ db }) =>async (req, res) => {
   } catch (error) {
     res.status(404).send(`can't delete user : ${error.message}`)
   }
-
 };
 
 /**

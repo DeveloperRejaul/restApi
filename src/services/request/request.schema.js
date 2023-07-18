@@ -13,12 +13,11 @@ const request = new Schema({
   quantity: { type: String, required: true },
   note: { type: String },
   status: { type: String, default: "pending", enum: ["pending", "abandoned", "closed", "estimate sent"] },
-  shippingAddress: { type: String },
-  billingAddress: { type: String },
   trnxId: { type: String },
   sellerTakes: { type: String },
   usSellerTakes: { type: String },
-  packersFee:{type: String },
+  packersFee: { type: String },
+  totalPrice:{type: String },
   user:{type:mongoose.Types.ObjectId , ref:"User", required:true}
 },{ timestamps: true });
 

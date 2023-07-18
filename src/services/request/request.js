@@ -16,7 +16,6 @@ export default function request() {
   this.route.get("/request", getAllRequest(this));
 
 
-
   /**
    * GET /request/:id
    * @description This route is use for request product by id

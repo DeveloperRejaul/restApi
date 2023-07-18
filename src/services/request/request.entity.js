@@ -1,6 +1,7 @@
 import RequestItems from "./request.schema";
 import validation from "../../utils/Validation";
 import { updateMany } from "../../controllers/operations";
+import User from "../mainUser/user.schema";
 const requestAllow = new Set(['name', 'link', 'quantity', 'user']);
 const checkInput = validation()
 
@@ -71,9 +72,11 @@ export const getRequestById  = ({ db }) => async (req, res) => {
  */
 export const updateRequest  = ({ db }) => async (req, res) => {
   const updateId = req.params?.id;
+  const {user,request } = req.body || {}
   try {
-    const updatedRequest =  await db.update({ table: RequestItems, key: { id: updateId, body: { ...req.body } } });
-     res.status(200).send(updatedRequest );
+    const updatedRequest =  await db.update({ table: RequestItems, key: { id: updateId, body: { ...request } } });
+    const updatedUser =  await db.update({ table: User, key: { id: user.id, body: {...user } } });
+     res.status(200).send({...updatedRequest, ...updatedUser });
     } catch (err) {
       console.log(err);
       res.status(500).send('Don"t connect with me');
@@ -97,4 +100,7 @@ export const deleteRequest  = ({ db }) => async (req, res) => {
       res.status(500).send('Don"t connect with me');
     }
 };
+
+
+
 

@@ -1,5 +1,4 @@
 import Validation from "../../utils/Validation";
-import Product from "../products/products.schema";
 import Category from "./category.schema";
 
 /**
@@ -12,7 +11,6 @@ export const createCategory = ({ db }) => async (req, res) => {
 
   const { name, slug } = req.body || {}
   try {
-
     if (Validation().isEmpty(name)) return await  res.status(401).send("Input Error")
     if (Validation().isEmpty(slug)) return await  res.status(401).send("Input Error")
 

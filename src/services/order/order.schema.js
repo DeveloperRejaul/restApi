@@ -8,13 +8,11 @@ const Order = new Schema({
     unique: true,
     default: generateOrderID,
   },
-  name: { type: String, required: true },
-  link: { type: String, required: true },
-  quantity: { type: String, required: true },
-  note: { type: String },
+  items: { type: String, required: true , default:"1"},
   date: { type: Date, default: Date.now },
-  status :{ type:String , default:"pending" , enum: [ "abandoned", "estimate send","closed" , "pending" ]},
-  user:{type: mongoose.Types.ObjectId, ref: "User" , required:true},
+  status: { type: String, default: "processing", enum: ["pending", "processing", "completed", "shipping", "cancel", "paid"] },
+  requestId: { type: mongoose.Types.ObjectId, ref: "Request", required: true },
+  userId:{ type: mongoose.Types.ObjectId, ref: "User", required: true },
 },{ timestamps: true });
 
 Order.plugin(paginate)
