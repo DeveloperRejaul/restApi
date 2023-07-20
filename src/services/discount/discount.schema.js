@@ -4,8 +4,7 @@ import paginate from 'mongoose-paginate-v2';
 const Discount = new Schema(
   {
     couponId: { type: mongoose.Types.ObjectId, ref: "Coupon"},
-    description: {type:String },
-    main: {type:String },
+    description: { type: String },
   },
   { timestamps: true }
 );

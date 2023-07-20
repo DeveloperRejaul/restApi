@@ -1,5 +1,5 @@
 import { userAuthentication } from './ user.middleware';
-import { getAllCustomer, loginUser, recoverAccount, setNewPass, signUpUser, verifyOtp } from './user.entity';
+import { addNewCustomer, getAllCustomer, getSingleCustomer, loginUser, recoverAccount, setNewPass, signUpUser, verifyOtp } from './user.entity';
 
 export default function user() {
   /**
@@ -45,5 +45,23 @@ export default function user() {
    * @response [object ] 200 - token.
    */
   this.route.get('/user/customer', getAllCustomer(this));
+
+
+  /**
+   * POST /user/customer
+   * @description This route is use for add new customer
+   * @response [object ] 200 - token.
+   */
+  this.route.post('/user/customer', addNewCustomer(this));
+
+
+  /**
+   * GET /user/customer/:id
+   * @description This route is use for get  single  customer
+   * @response [object ] 200 - token.
+  */
+  this.route.get('/user/customer/:id', getSingleCustomer(this));
+
+
 
 }

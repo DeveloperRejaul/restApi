@@ -73,7 +73,9 @@ export const getOrderById = ({ db }) => async (req, res) => {
 export const deleteOrder = ({ db }) => async (req, res) => {
   const id = req.params?.id
   try {
-    const result = await db.remove({ table: Order, key: {_id: id } });
+    const result = await db.remove({ table: Order, key: { _id: id } });
+    await User.updateOne({ _id: result?.userId }, { $pull: { orderId: id } })
+
     res.status(200).send(result);
     } catch (err) {
       console.log(err);

@@ -1,5 +1,5 @@
-import {addDiscount, deleteProductById,editProductById,getAllProduct,getProductById,productPost} from './product.entity';
-// const upload = multer({ dest: 'uploads/' })
+import { deleteProductById,editProductById,getAllProduct,getProductById,productPost} from './product.entity';
+
 
 export default function product() {
   /**
@@ -37,10 +37,5 @@ export default function product() {
    */
   this.route.delete('/product/:id', deleteProductById(this));
 
-  /**
-   * DELETE /product by id
-   * @description This route is used to Get single product.
-   * @response [object] 200 -  Its return product isDelete .
-   */
-  this.route.put('/product/:id', addDiscount(this));
+
 }

@@ -43,13 +43,24 @@ const Validation  = () => {
      */
     isEmpty: (...value) => {
       for (let i = 0; i < value.length; i++) {
-        return value[i] === "" ? true :false
+        if(value[i] === "") return true
       }
-    }
+      return false
+    },
 
+
+    /**
+     * @description this function for check array length
+     * @param {object} obj request body
+     * @param {number} len number of object length
+     * @returns  Boolean value
+     */
+    checkArrayLength: (arr=[], len) => {
+      return arr.length == len ? true : false;
+    },
 
   }
 }
 
-
+export const validation = Validation()
 export default Validation

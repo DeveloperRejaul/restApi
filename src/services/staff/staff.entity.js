@@ -1,6 +1,7 @@
 import Validation from '../../utils/Validation'
 import Support from '../support/support.schema';
 import Staff from './staff.schema';
+const validation = Validation()
 
 /**
  * This function is used for create staff.
@@ -13,9 +14,9 @@ export const addStaff =({ db }) =>async (req, res) => {
   const existSupportStaff = role === 'support';
 
   try {
-    if(!Validation().objKeysLength(req.body, 6)) return res.status(400).send('invalid request');
-    if(!Validation().isEmail(email)) return res.status(400).send('invalid email');
-    if (!Validation().isPhoneNumber(phoneNumber)) return res.status(400).send('invalid phone number');
+    if(!validation.objKeysLength(req.body, 6)) return res.status(400).send('invalid request');
+    if(!validation.isEmail(email)) return res.status(400).send('invalid email');
+    if (!validation.isPhoneNumber(phoneNumber)) return res.status(400).send('invalid phone number');
     const staff = await db.create({ table: Staff, key: { ...req.body } });
     await db.save(staff);
 
@@ -38,7 +39,6 @@ export const addStaff =({ db }) =>async (req, res) => {
  * @param {Object} res this is the response object
  * @returns if  is  success  It returns all staff logout information.
 */
-
 export const logoutAllStaff =({ db }) =>async (req, res) => {
   const id = req.params.id
   try {

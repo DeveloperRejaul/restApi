@@ -2,7 +2,6 @@ import { createCategory, deleteManyCategory, getCategory } from "./category.enti
 
 export default function Category() {
 
-
 /**
  * POST /category
  * @description This route is use for creating category

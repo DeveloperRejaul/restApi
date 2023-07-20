@@ -11,8 +11,8 @@ export const createCategory = ({ db }) => async (req, res) => {
 
   const { name, slug } = req.body || {}
   try {
-    if (Validation().isEmpty(name)) return await  res.status(401).send("Input Error")
-    if (Validation().isEmpty(slug)) return await  res.status(401).send("Input Error")
+    if (Validation().isEmpty(name)) return await res.status(401).send("Input Error");
+    if (Validation().isEmpty(slug)) return await res.status(401).send("Input Error");
 
       const category = await db.create({
           table: Category,
@@ -53,12 +53,13 @@ export const getCategory = ({ db }) => async (req, res) => {
 export const deleteManyCategory = ({ db }) => async (req, res) => {
   try {
     const categoryIds = req.params.ids?.split(',')
-    const deleteRes = await db.removeAll( {table:Category,  key:{ _id: { $in: categoryIds}} });
+    const deleteRes = await db.removeAll({ table: Category, key: { _id: { $in: categoryIds } } });
+
     res.status(200).send(deleteRes);
     } catch (err) {
       console.log(err);
       res.status(500).send('Don"t connect with me');
-    }
+  }
 };
 
 

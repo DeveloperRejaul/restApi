@@ -12,7 +12,7 @@ export const productPost = ({ db, imageUp }) => async (req, res) => {
 
   try {
     const validObj = Object.keys(req.body).every((d) => req.body[d] !== '' && req.body[d] !== null) || Object.keys(req.body.data).every((d) => req.body.data[d] !== '' && req.body.data[d] !== null);
-    if (!validObj) res.status(400).send(' wrong request');
+    if (!validObj) res.status(400).send('wrong request');
     if (req.body?.data) req.body = JSON.parse(req.body?.data || '{}');
     if (req.files?.pImages) {
       for (const m of req.files.pImages) {
@@ -112,17 +112,3 @@ export const deleteProductById =({ db }) =>async (req, res) => {
     }
 };
 
-/**
- * This function is used for delete product .
- * @param {Object} req This is the request object.
- * @param {Object} res this is the response object
- * @returns if is success It returns a array of object otherwise  It throw error.
- */
-export const addDiscount = ({ db }) => async (req, res) => {
-  try {
-    const {mainCategory} = req.body
-    } catch (err) {
-      console.log(err);
-      res.status(500).send('Don"t connect with me');
-    }
-};

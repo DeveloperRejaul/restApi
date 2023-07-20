@@ -5,7 +5,8 @@ const Category = new Schema(
   {
     name:{type:String, required:true},
     slug: { type: String, required: true },
-    productId:[{type:mongoose.Types.ObjectId , ref:"Product"}]
+    productId: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
+    discountId:[{type:mongoose.Types.ObjectId, ref:"Discount"}]
   },
   { timestamps: true }
 );

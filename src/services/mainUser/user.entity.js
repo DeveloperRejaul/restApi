@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { generateOTP } from '../../utils/utisFun';
+import { generateOTP } from '../../utils/utilsFun';
 import Validation from '../../utils/Validation';
 import User from './user.schema';
 
@@ -145,28 +145,67 @@ export const setNewPass = ({ db , settings}) => async (req, res) => {
 };
 
 
-
 /**
  * This function is used for get all customer.
  * @param {Object} req This is the request object.
  * @param {Object} res this is the response object
- * @returns if is success It returns updated user object.
+ * @returns if is success It returns all of customer if oder id exists.
  */
-export const getAllCustomer = ({ db , settings}) => async (req, res) => {
-
+export const getAllCustomer = ({ db }) => async (req, res) => {
   try {
-    const result = await db.find({
-    table: User, key: {
-    allowedQuery: new Set(['sortBy', 'search']),
-    paginate: true,
-    query: { sortBy: 'name:orderId', search: 'john', page: 1, limit: 10 }
-      }
-    })
+    const result = await db.find({ table: User, key: { orderId: { $exists: true,$ne: [] } } });
     res.status(200).send(result)
 
   } catch (err) {
     console.log(err);
       res.status(500).send('Don"t connect with me');
+  }
+};
+
+
+/**
+ * This function is used for add new  customer.
+ * @param {Object} req This is the request object.
+ * @param {Object} res this is the response object
+ * @returns if is success It returns new  customer.
+ */
+export const addNewCustomer = ({ db }) => async (req, res) => {
+  const { firstName, lastName, email, phoneNumber, altNumber, address,city, zipCode  } = req.body || {}
+  const password = await bcrypt.hash("1234", 8);
+  try {
+
+    if (Validation().isEmpty(firstName,email,phoneNumber,address,city, zipCode )) return res.status(400).send('invalid input');
+    if (!Validation().isEmail(email)) return res.status(400).send('invalid email');
+    const name = `${firstName} ${lastName}`;
+    const newAddress = `${address}, ${city}, ${zipCode}`
+
+    const customer = await db.create({
+        table: User,
+        key: { name, email, phoneNumber, altNumber,  address:newAddress, password, tramsAndCondition: true}
+    });
+    await res.status(200).send(customer );
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Don"t connect with me');
+  }
+};
+
+
+/**
+ * This function is used for add new  customer.
+ * @param {Object} req This is the request object.
+ * @param {Object} res this is the response object
+ * @returns if is success It returns new  customer.
+ */
+export const getSingleCustomer = ({ db }) => async (req, res) => {
+
+  try {
+   // inner populate
+    const customer = await User.findOne({ _id: req.params.id }).populate({ path: 'orderId', populate: { path: 'requestId',  model: 'Request'} })
+    res.status(200).send(customer)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Don"t connect with me');
   }
 };
 
